@@ -1,6 +1,11 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import Explore from './pages/Explore';
+import Chat from './pages/Chat';
+import PostCollab from './pages/PostCollab';
+import Profile from './pages/Profile';
 
 // Moved Home back to App.jsx for simplicity as a component definition, or we can inline it
 const Home = () => {
@@ -36,6 +41,11 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/explore" element={<Explore />} />
+      <Route path="/chat" element={<Chat />} />
+      <Route path="/post" element={<PostCollab />} />
+      <Route path="/profile/:id" element={<Profile />} />
     </Routes>
   );
 }
