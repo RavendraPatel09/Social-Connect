@@ -22,7 +22,7 @@ const BottomNav = () => {
           <Link 
             key={item.label} 
             to={item.path} 
-            className={\`flex flex-col items-center justify-center gap-1 w-12 h-full transition-colors \${isActive ? 'text-violet-400' : 'text-slate-400'}\`}
+            className={`flex flex-col items-center justify-center gap-1 w-12 h-full transition-colors ${isActive ? 'text-violet-400' : 'text-slate-400'}`}
           >
             <div className="relative">
               <Icon size={24} />

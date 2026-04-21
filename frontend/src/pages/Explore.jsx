@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Star } from 'lucide-react';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { mockSuggestedUsers } from '../../data/mockData';
+import { mockSuggestedUsers } from '../data/mockData';
 
 const Explore = () => {
   const [search, setSearch] = useState('');
@@ -39,7 +39,7 @@ const Explore = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               key={cat} 
-              className={\`p-4 rounded-2xl cursor-pointer text-center font-semibold bg-gradient-to-br \${i % 2 === 0 ? 'from-slate-800 to-slate-900 border border-slate-700 hover:border-violet-500' : 'from-violet-900/40 to-slate-900 border border-violet-900/50 hover:border-violet-500'}\`}
+              className={`p-4 rounded-2xl cursor-pointer text-center font-semibold bg-gradient-to-br ${i % 2 === 0 ? 'from-slate-800 to-slate-900 border border-slate-700 hover:border-violet-500' : 'from-violet-900/40 to-slate-900 border border-violet-900/50 hover:border-violet-500'}`}
             >
               {cat}
             </motion.div>

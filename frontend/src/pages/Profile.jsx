@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Instagram, Youtube, Users, Star, Award, Sparkles } from 'lucide-react';
+import { ExternalLink, Camera, PlaySquare, Users, Star, Award, Sparkles } from 'lucide-react';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { mockUser } from '../../data/mockData';
+import { mockUser } from '../data/mockData';
 
 const Profile = () => {
   return (
@@ -53,12 +53,12 @@ const Profile = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-6 md:px-12 mb-12">
           
           <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex items-center gap-4">
-            <div className="bg-pink-500/10 p-3 rounded-xl text-pink-500"><Instagram size={24} /></div>
+            <div className="bg-pink-500/10 p-3 rounded-xl text-pink-500"><Camera size={24} /></div>
             <div><p className="text-sm text-slate-400">Instagram</p><p className="text-xl font-bold text-white">{mockUser.platforms.instagram}</p></div>
           </div>
 
           <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex items-center gap-4">
-            <div className="bg-red-500/10 p-3 rounded-xl text-red-500"><Youtube size={24} /></div>
+            <div className="bg-red-500/10 p-3 rounded-xl text-red-500"><PlaySquare size={24} /></div>
             <div><p className="text-sm text-slate-400">YouTube</p><p className="text-xl font-bold text-white">{mockUser.platforms.youtube}</p></div>
           </div>
           
@@ -80,7 +80,7 @@ const Profile = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((item) => (
               <div key={item} className="bg-slate-800 rounded-xl aspect-video relative group overflow-hidden border border-slate-700">
-                <img src={\`https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=500&sig=\${item}\`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img src={`https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=500&sig=${item}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <span className="text-white font-semibold flex items-center gap-2"><Award size={18} /> View Case Study</span>
                 </div>

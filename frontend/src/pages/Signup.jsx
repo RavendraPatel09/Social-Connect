@@ -71,7 +71,7 @@ const Signup = () => {
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-3">I am a...</label>
             <div className="grid grid-cols-2 gap-4">
-              <label className={\`cursor-pointer py-3 px-4 rounded-xl border flex items-center justify-center font-medium transition-all \${formData.role === 'creator' ? 'bg-sky-500/20 border-sky-500 text-sky-400' : 'bg-slate-900/50 border-slate-700 text-slate-400 hover:bg-slate-800'}\`}>
+              <label className={`cursor-pointer py-3 px-4 rounded-xl border flex items-center justify-center font-medium transition-all ${formData.role === 'creator' ? 'bg-sky-500/20 border-sky-500 text-sky-400' : 'bg-slate-900/50 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
                 <input 
                   type="radio" 
                   name="role" 
@@ -82,7 +82,7 @@ const Signup = () => {
                 />
                 Creator
               </label>
-              <label className={\`cursor-pointer py-3 px-4 rounded-xl border flex items-center justify-center font-medium transition-all \${formData.role === 'provider' ? 'bg-sky-500/20 border-sky-500 text-sky-400' : 'bg-slate-900/50 border-slate-700 text-slate-400 hover:bg-slate-800'}\`}>
+              <label className={`cursor-pointer py-3 px-4 rounded-xl border flex items-center justify-center font-medium transition-all ${formData.role === 'provider' ? 'bg-sky-500/20 border-sky-500 text-sky-400' : 'bg-slate-900/50 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
                 <input 
                   type="radio" 
                   name="role" 

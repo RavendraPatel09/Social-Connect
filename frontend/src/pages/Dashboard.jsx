@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle, Heart, Share2, Sparkles, UserPlus } from 'lucide-react';
-import { mockFeedPosts, mockSuggestedUsers } from '../../data/mockData';
+import { mockFeedPosts, mockSuggestedUsers } from '../data/mockData';
 import DashboardLayout from '../components/layout/DashboardLayout';
 
 const Dashboard = () => {
@@ -17,7 +17,7 @@ const Dashboard = () => {
             <button 
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={\`text-lg font-bold pb-2 transition-colors relative whitespace-nowrap \${activeTab === tab ? 'text-white' : 'text-slate-500 hover:text-slate-300'}\`}
+              className={`text-lg font-bold pb-2 transition-colors relative whitespace-nowrap ${activeTab === tab ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
             >
               {tab}
               {activeTab === tab && (
@@ -47,7 +47,7 @@ const Dashboard = () => {
                       <p className="text-sm text-slate-400">{post.author.handle} • {post.timePosted}</p>
                     </div>
                   </div>
-                  <span className={\`text-xs px-3 py-1 rounded-full font-medium \${post.author.role === 'creator' ? 'bg-sky-500/20 text-sky-400' : 'bg-amber-500/20 text-amber-400'}\`}>
+                  <span className={`text-xs px-3 py-1 rounded-full font-medium ${post.author.role === 'creator' ? 'bg-sky-500/20 text-sky-400' : 'bg-amber-500/20 text-amber-400'}`}>
                     {post.author.role}
                   </span>
                 </div>

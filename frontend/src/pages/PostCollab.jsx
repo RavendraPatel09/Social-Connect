@@ -17,7 +17,7 @@ const PostCollab = () => {
     setTimeout(() => {
       setFormData(prev => ({
         ...prev,
-        description: \`Looking for an experienced \${prev.platform} specialist who can elevate this project to the next level. \n\nMust have proven experience. The ideal outcome should include high-engagement strategies tailored for my target audience. \n\nBudget is strictly \${prev.budget || 'open'}. DM me if interested!\`
+        description: `Looking for an experienced ${prev.platform} specialist who can elevate this project to the next level. \n\nMust have proven experience. The ideal outcome should include high-engagement strategies tailored for my target audience. \n\nBudget is strictly ${prev.budget || 'open'}. DM me if interested!`
       }));
       setIsEnhancing(false);
     }, 2000);

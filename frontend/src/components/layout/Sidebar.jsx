@@ -10,7 +10,7 @@ const Sidebar = () => {
     { label: 'Explore', icon: Compass, path: '/explore' },
     { label: 'Create Post', icon: PlusSquare, path: '/post' },
     { label: 'Messages', icon: MessageSquare, path: '/chat', badge: 2 },
-    { label: 'Profile', icon: User, path: \`/profile/\${mockUser.id}\` },
+    { label: 'Profile', icon: User, path: `/profile/${mockUser.id}` },
   ];
 
   return (
@@ -32,10 +32,10 @@ const Sidebar = () => {
             <Link 
               key={item.label}
               to={item.path}
-              className={\`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 \${isActive ? 'bg-violet-600/10 text-violet-400 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}\`}
+              className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-violet-600/10 text-violet-400 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}
             >
               <div className="relative">
-                <Icon size={24} className={\`\${isActive ? 'text-violet-400' : ''}\`} />
+                <Icon size={24} className={`${isActive ? 'text-violet-400' : ''}`} />
                 {item.badge && (
                   <span className="absolute -top-1 -right-1 bg-sky-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                     {item.badge}

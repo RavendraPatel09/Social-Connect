@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Image as ImageIcon, Smile, Bot } from 'lucide-react';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { mockChats } from '../../data/mockData';
+import { mockChats } from '../data/mockData';
 
 const Chat = () => {
   const [activeChat, setActiveChat] = useState(mockChats[0]);
@@ -38,7 +38,7 @@ const Chat = () => {
               <div 
                 key={chat.id} 
                 onClick={() => { setActiveChat(chat); setMessages(chat.messages); }}
-                className={\`flex items-center gap-3 p-4 cursor-pointer transition-colors \${activeChat.id === chat.id ? 'bg-violet-900/20 border-l-4 border-violet-500' : 'hover:bg-slate-800 border-l-4 border-transparent'}\`}
+                className={`flex items-center gap-3 p-4 cursor-pointer transition-colors ${activeChat.id === chat.id ? 'bg-violet-900/20 border-l-4 border-violet-500' : 'hover:bg-slate-800 border-l-4 border-transparent'}`}
               >
                 <div className="relative">
                   <img src={chat.user.avatar} className="w-12 h-12 rounded-full object-cover" />
@@ -52,7 +52,7 @@ const Chat = () => {
                     <h4 className="font-bold text-slate-200 truncate">{chat.user.name}</h4>
                     <span className="text-xs text-slate-500">{chat.time}</span>
                   </div>
-                  <p className={\`text-sm truncate \${chat.unread > 0 ? 'text-white font-semibold' : 'text-slate-400'}\`}>
+                  <p className={`text-sm truncate ${chat.unread > 0 ? 'text-white font-semibold' : 'text-slate-400'}`}>
                     {chat.lastMessage}
                   </p>
                 </div>
@@ -86,9 +86,9 @@ const Chat = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 key={idx} 
-                className={\`flex flex-col \${msg.sender === 'me' ? 'items-end' : 'items-start'}\`}
+                className={`flex flex-col ${msg.sender === 'me' ? 'items-end' : 'items-start'}`}
               >
-                <div className={\`max-w-[75%] md:max-w-[60%] p-3 rounded-2xl \${msg.sender === 'me' ? 'bg-violet-600 text-white rounded-tr-sm' : 'bg-slate-800 text-slate-200 rounded-tl-sm'}\`}>
+                <div className={`max-w-[75%] md:max-w-[60%] p-3 rounded-2xl ${msg.sender === 'me' ? 'bg-violet-600 text-white rounded-tr-sm' : 'bg-slate-800 text-slate-200 rounded-tl-sm'}`}>
                   {msg.text}
                 </div>
                 <span className="text-xs text-slate-500 mt-1 px-1">{msg.time}</span>
