@@ -14,10 +14,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Signup submitted", formData);
-    // TODO: Connect to explicit backend registration API
-    // On success, redirect to login:
-    // navigate('/login');
+    console.log("Mock Signup successful", formData);
+    navigate('/dashboard');
   };
 
   return (
