@@ -283,8 +283,8 @@ function SignupPage({ onSignup, onBack }) {
     setIsGenerating(true);
     try {
       const prompt = userType === 'creator' 
-        ? \`Generate a compelling Instagram creator bio for someone who: \${JSON.stringify(profileData)}. Keep it under 100 characters, professional yet personable.\`
-        : \`Generate a professional service provider bio for: \${JSON.stringify(profileData)}. Highlight expertise and value proposition in under 100 characters.\`;
+        ? `Generate a compelling Instagram creator bio for someone who: ${JSON.stringify(profileData)}. Keep it under 100 characters, professional yet personable.`
+        : `Generate a professional service provider bio for: ${JSON.stringify(profileData)}. Highlight expertise and value proposition in under 100 characters.`;
 
       const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -326,11 +326,11 @@ function SignupPage({ onSignup, onBack }) {
           <Instagram size={40} />
           <h1>Join CreatorLink</h1>
           <div className="progress-bar">
-            <div className={\`progress-step \${step >= 1 ? 'active' : ''}\`}>1</div>
-            <div className={\`progress-line \${step >= 2 ? 'active' : ''}\`}></div>
-            <div className={\`progress-step \${step >= 2 ? 'active' : ''}\`}>2</div>
-            <div className={\`progress-line \${step >= 3 ? 'active' : ''}\`}></div>
-            <div className={\`progress-step \${step >= 3 ? 'active' : ''}\`}>3</div>
+            <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>1</div>
+            <div className={`progress-line ${step >= 2 ? 'active' : ''}`}></div>
+            <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>2</div>
+            <div className={`progress-line ${step >= 3 ? 'active' : ''}`}></div>
+            <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>3</div>
           </div>
         </div>
 
@@ -545,8 +545,8 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
     setIsLoadingAI(true);
     try {
       const prompt = user.userType === 'creator'
-        ? \`Based on this creator profile: \${JSON.stringify(user)}, recommend the best types of service providers they should look for. Return ONLY a JSON array of 3 recommendations with: {"service": "service name", "reason": "why this helps", "priority": "high/medium"}\`
-        : \`Based on this service provider profile: \${JSON.stringify(user)}, recommend ideal creator profiles they should target. Return ONLY a JSON array of 3 recommendations with: {"type": "creator type", "reason": "why good match", "priority": "high/medium"}\`;
+        ? `Based on this creator profile: ${JSON.stringify(user)}, recommend the best types of service providers they should look for. Return ONLY a JSON array of 3 recommendations with: {"service": "service name", "reason": "why this helps", "priority": "high/medium"}`
+        : `Based on this service provider profile: ${JSON.stringify(user)}, recommend ideal creator profiles they should target. Return ONLY a JSON array of 3 recommendations with: {"type": "creator type", "reason": "why good match", "priority": "high/medium"}`;
 
       const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -569,7 +569,7 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
 
       const data = await response.json();
       const text = data.content[0].text;
-      const cleaned = text.replace(/\`\`\`json|\`\`\`/g, "").trim();
+      const cleaned = text.replace(/```json|```/g, "").trim();
       const recommendations = JSON.parse(cleaned);
       setAiRecommendations(recommendations);
     } catch (error) {
@@ -633,14 +633,14 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
 
         <nav className="sidebar-nav">
           <button 
-            className={\`nav-item \${activeTab === 'discover' ? 'active' : ''}\`}
+            className={`nav-item ${activeTab === 'discover' ? 'active' : ''}`}
             onClick={() => setActiveTab('discover')}
           >
             <Search size={20} />
             <span>Discover</span>
           </button>
           <button 
-            className={\`nav-item \${activeTab === 'connections' ? 'active' : ''}\`}
+            className={`nav-item ${activeTab === 'connections' ? 'active' : ''}`}
             onClick={() => setActiveTab('connections')}
           >
             <Users size={20} />
@@ -648,7 +648,7 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
             {connections.length > 0 && <span className="badge">{connections.length}</span>}
           </button>
           <button 
-            className={\`nav-item \${activeTab === 'messages' ? 'active' : ''}\`}
+            className={`nav-item ${activeTab === 'messages' ? 'active' : ''}`}
             onClick={() => setActiveTab('messages')}
           >
             <MessageCircle size={20} />
@@ -656,7 +656,7 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
             {messages.length > 0 && <span className="badge">{messages.length}</span>}
           </button>
           <button 
-            className={\`nav-item \${activeTab === 'profile' ? 'active' : ''}\`}
+            className={`nav-item ${activeTab === 'profile' ? 'active' : ''}`}
             onClick={() => setActiveTab('profile')}
           >
             <User size={20} />
@@ -702,7 +702,7 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
                 <div className="recommendations-grid">
                   {aiRecommendations.map((rec, idx) => (
                     <div key={idx} className="recommendation-card">
-                      <div className={\`priority-badge \${rec.priority}\`}>
+                      <div className={`priority-badge ${rec.priority}`}>
                         {rec.priority} priority
                       </div>
                       <h3>{rec.service || rec.type}</h3>
@@ -817,7 +817,7 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
                         <h3>{profile.name}</h3>
                         <p>{profile.service || profile.niche}</p>
                       </div>
-                      <span className={\`connection-status \${conn.status}\`}>
+                      <span className={`connection-status ${conn.status}`}>
                         {conn.status}
                       </span>
                       <button className="btn-secondary" onClick={() => setActiveTab('messages')}>
@@ -1027,7 +1027,7 @@ function Dashboard({ user, profiles, connections, setConnections, messages, setM
 }
 
 // Comprehensive Styles
-const styles = \`
+const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap');
 
   :root {
@@ -2334,4 +2334,4 @@ const styles = \`
       grid-template-columns: 1fr;
     }
   }
-\`;
+`;
