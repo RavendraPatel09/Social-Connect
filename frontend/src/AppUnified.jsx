@@ -9,6 +9,7 @@ import {
   Hash, TrendingUp, Target, ChevronLeft, ChevronDown, Filter, Zap as ZapIcon,
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import BusinessLanding from './pages/BusinessLanding';
 
 /* ─────────────────────────────────────────────
    MOCK DATA
@@ -616,6 +617,7 @@ export default function App() {
             exit={{ opacity: 0, y: -14 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="h-full">
             {view === 'landing'   && <LandingPage onNavigate={navigate} />}
+            {view === 'business'  && <BusinessLanding onNavigate={navigate} />}
             {view === 'auth'      && <AuthFlow onComplete={(role) => { setUserRole(role); navigate('dashboard'); }} onBack={() => navigate('landing')} />}
             {isInDashboard        && <AppShell view={view} setView={navigate} userRole={userRole} savedProfiles={savedProfiles} setSavedProfiles={setSavedProfiles} />}
           </motion.div>
@@ -693,12 +695,12 @@ function LandingPage({ onNavigate }) {
                 className="px-10 py-4 text-base font-bold text-white rounded-2xl btn-gradient glow-violet flex items-center gap-2 justify-center">
                 Start for Free <ArrowRight size={18} />
               </motion.button>
-              <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate('auth')}
+              <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate('business')}
                 className="px-10 py-4 text-base font-semibold glass border rounded-2xl transition-all"
                 style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#94a3b8' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,58,237,0.38)'; e.currentTarget.style.color='#f1f5f9'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.09)'; e.currentTarget.style.color='#94a3b8'; }}>
-                Watch Demo
+                View Business Demo
               </motion.button>
             </div>
           </motion.div>
