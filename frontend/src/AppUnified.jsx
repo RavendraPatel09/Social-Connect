@@ -581,7 +581,10 @@ function StoriesBar() {
    GLASS CARD
 ───────────────────────────────────────────── */
 const GlassCard = ({ children, className = '', hover = false, onClick }) => (
-  <div onClick={onClick} className={`glass rounded-2xl ${hover ? 'card-lift cursor-pointer' : ''} ${className}`}>
+  <div
+    onClick={onClick}
+    className={`rounded-2xl border ${hover ? 'card-lift cursor-pointer' : ''} ${className}`}
+    style={{ background: 'var(--bg-card)', borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}>
     {children}
   </div>
 );
@@ -800,7 +803,7 @@ function LandingPage({ onNavigate, darkMode, setDarkMode }) {
 /* ─────────────────────────────────────────────
    AUTH FLOW
 ───────────────────────────────────────────── */
-function AuthFlow({ onComplete, onBack }) {
+function AuthFlow({ onComplete, onBack, darkMode }) {
   const [step, setStep] = useState(0);
   const [role, setRole] = useState(null);
   const [bioInput, setBioInput] = useState('');
@@ -839,12 +842,12 @@ function AuthFlow({ onComplete, onBack }) {
   const progressPcts = [33, 66, 100];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 relative" style={{ background: 'var(--bg-base)' }}>
       <button onClick={onBack}
         className="absolute top-6 left-6 flex items-center gap-2 text-sm font-semibold transition-colors"
-        style={{ color: '#475569' }}
-        onMouseEnter={e => e.currentTarget.style.color='#f1f5f9'}
-        onMouseLeave={e => e.currentTarget.style.color='#475569'}>
+        style={{ color: 'var(--text-secondary)' }}
+        onMouseEnter={e => e.currentTarget.style.color='#6366f1'}
+        onMouseLeave={e => e.currentTarget.style.color='var(--text-secondary)'}>
         <ChevronRight className="rotate-180" size={16} /> Back
       </button>
 
@@ -852,12 +855,12 @@ function AuthFlow({ onComplete, onBack }) {
       <div className="w-full max-w-md mb-10">
         <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest mb-3">
           {stepLabels.map((label, i) => (
-            <span key={label} style={{ color: i <= step ? '#a78bfa' : '#334155' }}>{label}</span>
+            <span key={label} style={{ color: i <= step ? '#6366f1' : 'var(--text-muted)' }}>{label}</span>
           ))}
         </div>
-        <div className="h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.07)' }}>
+        <div className="h-1.5 rounded-full" style={{ background: 'var(--border)' }}>
           <motion.div animate={{ width: `${progressPcts[step]}%` }} transition={{ duration: 0.5 }}
-            className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, #7c3aed, #0ea5e9)' }} />
+            className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, #6366f1, #0ea5e9)' }} />
         </div>
       </div>
 
@@ -867,26 +870,26 @@ function AuthFlow({ onComplete, onBack }) {
           <motion.div key="role" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} className="w-full max-w-2xl">
             <div className="text-center mb-10">
               <Logo />
-              <h1 className="font-display text-3xl font-extrabold text-white mt-6 mb-2">Choose your path</h1>
-              <p style={{ color: '#64748b' }}>Select how you'll use CollabHub.</p>
+              <h1 className="font-display text-3xl font-extrabold mt-6 mb-2" style={{ color: 'var(--text-primary)' }}>Choose your path</h1>
+              <p style={{ color: 'var(--text-secondary)' }}>Select how you'll use CollabHub.</p>
             </div>
             <div className="grid md:grid-cols-2 gap-5">
               {[
-                { id: 'creator',  icon: <Camera size={28} />,  label: 'I am a Creator',  sub: 'I produce content and need editors, designers, or strategists.', color: '#7c3aed', perks: ['Browse 12K+ verified providers', 'AI-matched recommendations', 'Secure payments & contracts'] },
+                { id: 'creator',  icon: <Camera size={28} />,  label: 'I am a Creator',  sub: 'I produce content and need editors, designers, or strategists.', color: '#6366f1', perks: ['Browse 12K+ verified providers', 'AI-matched recommendations', 'Secure payments & contracts'] },
                 { id: 'provider', icon: <PenTool size={28} />, label: 'I am a Provider', sub: 'I offer services to help creators scale their content brand.', color: '#14b8a6', perks: ['Access premium creator jobs', 'Showcase your portfolio', 'Build long-term client base'] },
               ].map(item => (
                 <motion.button key={item.id} whileHover={{ scale: 1.02, y: -4 }} whileTap={{ scale: 0.98 }}
                   onClick={() => { setRole(item.id); setStep(1); }}
-                  className="text-left p-7 glass card-lift rounded-3xl border group"
-                  style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+                  className="text-left p-7 card-lift rounded-3xl border group"
+                  style={{ borderColor: 'var(--border)', background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)' }}>
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110"
-                    style={{ background: `${item.color}1f` }}>
+                    style={{ background: `${item.color}18` }}>
                     <span style={{ color: item.color }}>{item.icon}</span>
                   </div>
-                  <h2 className="text-xl font-extrabold text-white mb-1">{item.label}</h2>
-                  <p className="text-sm mb-5 leading-relaxed" style={{ color: '#64748b' }}>{item.sub}</p>
+                  <h2 className="text-xl font-extrabold mb-1" style={{ color: 'var(--text-primary)' }}>{item.label}</h2>
+                  <p className="text-sm mb-5 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{item.sub}</p>
                   {item.perks.map(perk => (
-                    <div key={perk} className="flex items-center gap-2 text-sm font-medium mb-2" style={{ color: '#cbd5e1' }}>
+                    <div key={perk} className="flex items-center gap-2 text-sm font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
                       <Check size={14} style={{ color: item.color }} /> {perk}
                     </div>
                   ))}
@@ -899,19 +902,19 @@ function AuthFlow({ onComplete, onBack }) {
         {/* Step 1: Build Profile */}
         {step === 1 && (
           <motion.div key="bio" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} className="w-full max-w-xl">
-            <div className="glass rounded-3xl border p-8" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+            <div className="rounded-3xl border p-8" style={{ borderColor: 'var(--border)', background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)' }}>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(124,58,237,0.22)' }}>
-                  <Bot size={20} className="text-violet-400" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.12)' }}>
+                  <Bot size={20} style={{ color: '#6366f1' }} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white">AI Profile Setup</h2>
-                  <p className="text-xs" style={{ color: '#475569' }}>Let AI craft your profile bio.</p>
+                  <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>AI Profile Setup</h2>
+                  <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>Let AI craft your profile bio.</p>
                 </div>
               </div>
 
               <div className="mb-5">
-                <label className="block text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#64748b' }}>
+                <label className="block text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)' }}>
                   Select your {role === 'creator' ? 'content niches' : 'skills'}
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -919,8 +922,8 @@ function AuthFlow({ onComplete, onBack }) {
                     <button key={tag} onClick={() => toggleInterest(tag)}
                       className="px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all"
                       style={interests.includes(tag)
-                        ? { background: 'rgba(124,58,237,0.15)', borderColor: 'rgba(124,58,237,0.6)', color: '#c4b5fd' }
-                        : { background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.09)', color: '#64748b' }}>
+                        ? { background: 'rgba(99,102,241,0.1)', borderColor: 'rgba(99,102,241,0.45)', color: '#6366f1' }
+                        : { background: 'var(--bg-tertiary)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}>
                       {tag}
                     </button>
                   ))}
@@ -928,13 +931,13 @@ function AuthFlow({ onComplete, onBack }) {
               </div>
 
               <div className="mb-5">
-                <label className="block text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#64748b' }}>Describe yourself</label>
+                <label className="block text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)' }}>Describe yourself</label>
                 <textarea value={bioInput} onChange={e => setBioInput(e.target.value)}
                   placeholder={role === 'creator' ? "e.g. I make gaming videos and need good thumbnails" : "e.g. I edit fast-paced reels and do motion graphics"}
-                  className="w-full glass border rounded-xl p-3 text-sm h-24 resize-none transition-colors bg-transparent placeholder:text-slate-600"
-                  style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#e2e8f0' }}
-                  onFocus={e => e.target.style.borderColor='rgba(124,58,237,0.45)'}
-                  onBlur={e => e.target.style.borderColor='rgba(255,255,255,0.09)'} />
+                  className="w-full rounded-xl p-3 text-sm h-24 resize-none transition-colors border"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-primary)', background: 'var(--bg-secondary)', outline: 'none' }}
+                  onFocus={e => e.target.style.borderColor='rgba(99,102,241,0.45)'}
+                  onBlur={e => e.target.style.borderColor='var(--border)'} />
               </div>
 
               <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
@@ -946,20 +949,20 @@ function AuthFlow({ onComplete, onBack }) {
               <AnimatePresence>
                 {(enhancedBio || isEnhancing) && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-5 overflow-hidden">
-                    <div className="rounded-2xl p-4 border" style={{ background: 'rgba(124,58,237,0.1)', borderColor: 'rgba(124,58,237,0.28)' }}>
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-violet-400 mb-2 uppercase tracking-widest">
+                    <div className="rounded-2xl p-4 border" style={{ background: 'rgba(99,102,241,0.06)', borderColor: 'rgba(99,102,241,0.2)' }}>
+                      <div className="flex items-center gap-1.5 text-xs font-bold mb-2 uppercase tracking-widest" style={{ color: '#6366f1' }}>
                         <Sparkles size={11} /> AI Result
                       </div>
-                      <p className="text-sm leading-relaxed min-h-12" style={{ color: '#cbd5e1' }}>
-                        {isEnhancing ? <span className="italic animate-pulse" style={{ color: '#475569' }}>Analyzing persona...</span> : enhancedBio}
-                        {enhancedBio && <span className="inline-block w-0.5 h-4 bg-violet-400 ml-0.5 animate-pulse align-middle" />}
+                      <p className="text-sm leading-relaxed min-h-12" style={{ color: 'var(--text-secondary)' }}>
+                        {isEnhancing ? <span className="italic animate-pulse" style={{ color: 'var(--text-muted)' }}>Analyzing persona...</span> : enhancedBio}
+                        {enhancedBio && <span className="inline-block w-0.5 h-4 ml-0.5 animate-pulse align-middle" style={{ background: '#6366f1' }} />}
                       </p>
                     </div>
                     {enhancedBio && (
                       <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                         onClick={() => setStep(2)}
-                        className="w-full mt-4 py-3 glass border text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2"
-                        style={{ borderColor: 'rgba(255,255,255,0.12)' }}>
+                        className="w-full mt-4 py-3 border font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-white"
+                        style={{ borderColor: 'rgba(99,102,241,0.3)', background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
                         Complete Setup <ArrowRight size={16} />
                       </motion.button>
                     )}
@@ -967,9 +970,9 @@ function AuthFlow({ onComplete, onBack }) {
                 )}
               </AnimatePresence>
 
-              <button onClick={() => setStep(2)} className="w-full mt-3 py-2 text-sm font-semibold transition-colors" style={{ color: '#334155' }}
-                onMouseEnter={e => e.currentTarget.style.color='#94a3b8'}
-                onMouseLeave={e => e.currentTarget.style.color='#334155'}>
+              <button onClick={() => setStep(2)} className="w-full mt-3 py-2 text-sm font-semibold transition-colors" style={{ color: 'var(--text-muted)' }}
+                onMouseEnter={e => e.currentTarget.style.color='var(--text-secondary)'}
+                onMouseLeave={e => e.currentTarget.style.color='var(--text-muted)'}>
                 Skip for now
               </button>
             </div>
@@ -981,11 +984,11 @@ function AuthFlow({ onComplete, onBack }) {
           <motion.div key="done" initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
             <motion.div animate={{ scale: [0, 1.2, 1], rotate: [0, 15, -10, 0] }} transition={{ delay: 0.1, duration: 0.7 }}
               className="w-24 h-24 rounded-full flex items-center justify-center text-4xl mx-auto mb-6"
-              style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', boxShadow: '0 0 60px rgba(124,58,237,0.6)' }}>
+              style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', boxShadow: '0 0 60px rgba(99,102,241,0.4)' }}>
               🎉
             </motion.div>
-            <h1 className="font-display text-3xl font-extrabold text-white mb-3">You're all set!</h1>
-            <p className="mb-8 max-w-sm mx-auto" style={{ color: '#64748b' }}>Your AI-powered CollabHub profile is ready. Start discovering amazing collaborators.</p>
+            <h1 className="font-display text-3xl font-extrabold mb-3" style={{ color: 'var(--text-primary)' }}>You're all set!</h1>
+            <p className="mb-8 max-w-sm mx-auto" style={{ color: 'var(--text-secondary)' }}>Your AI-powered CollabHub profile is ready. Start discovering amazing collaborators.</p>
             <motion.button whileHover={{ scale: 1.04 }} onClick={() => onComplete(role)}
               className="px-10 py-4 btn-gradient text-white font-bold rounded-2xl glow-violet flex items-center gap-2 mx-auto">
               Go to Dashboard <Rocket size={18} />
@@ -1570,48 +1573,48 @@ function ExplorePage({ onSaveToggle, savedProfiles }) {
   return (
     <div className="p-5 md:p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="font-display text-2xl font-extrabold text-white mb-1">Explore Collaborators</h1>
-        <p className="text-sm" style={{ color: '#475569' }}>Find your perfect creative partner from {PROFILES.length}+ verified profiles.</p>
+        <h1 className="font-display text-2xl font-extrabold mb-1" style={{ color: 'var(--text-primary)' }}>Explore Collaborators</h1>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Find your perfect creative partner from {PROFILES.length}+ verified profiles.</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-3 mb-6">
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-3.5" size={16} style={{ color: '#475569' }} />
+          <Search className="absolute left-4 top-3.5" size={16} style={{ color: 'var(--text-muted)' }} />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search by name, skill, or location..."
-            className="w-full pl-11 pr-4 py-3 glass border rounded-xl text-sm placeholder:text-slate-600 transition-colors bg-transparent"
-            style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#e2e8f0' }}
-            onFocus={e => e.target.style.borderColor='rgba(124,58,237,0.45)'}
-            onBlur={e => e.target.style.borderColor='rgba(255,255,255,0.09)'} />
+            className="w-full pl-11 pr-4 py-3 rounded-xl text-sm transition-colors border"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)', background: 'var(--bg-card)', outline: 'none' }}
+            onFocus={e => e.target.style.borderColor='rgba(99,102,241,0.45)'}
+            onBlur={e => e.target.style.borderColor='var(--border)'} />
         </div>
         <div className="flex gap-2 flex-wrap">
           {['All', 'Creator', 'Provider'].map(f => (
             <button key={f} onClick={() => setRoleFilter(f)}
               className="px-4 py-2.5 rounded-xl text-sm font-bold border transition-all"
               style={roleFilter === f
-                ? { background: 'rgba(124,58,237,0.18)', borderColor: 'rgba(124,58,237,0.5)', color: '#a78bfa' }
-                : { background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.09)', color: '#64748b' }}>
+                ? { background: 'rgba(99,102,241,0.1)', borderColor: 'rgba(99,102,241,0.4)', color: '#6366f1' }
+                : { background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}>
               {f}
             </button>
           ))}
           <select value={sort} onChange={e => setSort(e.target.value)}
-            className="px-3 py-2 glass border rounded-xl text-sm font-semibold bg-transparent transition-colors"
-            style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#94a3b8' }}>
-            <option value="Match"  style={{ background: '#0f0f1a' }}>Match Score</option>
-            <option value="Rating" style={{ background: '#0f0f1a' }}>Rating</option>
-            <option value="Name"   style={{ background: '#0f0f1a' }}>Name</option>
+            className="px-3 py-2 border rounded-xl text-sm font-semibold transition-colors"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--bg-card)' }}>
+            <option value="Match">Match Score</option>
+            <option value="Rating">Rating</option>
+            <option value="Name">Name</option>
           </select>
           <button onClick={() => setViewMode(m => m === 'grid' ? 'list' : 'grid')}
-            className="p-3 glass border rounded-xl transition-all"
-            style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#64748b' }}
-            onMouseEnter={e => { e.currentTarget.style.color='#f1f5f9'; e.currentTarget.style.borderColor='rgba(255,255,255,0.2)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color='#64748b'; e.currentTarget.style.borderColor='rgba(255,255,255,0.09)'; }}>
+            className="p-3 rounded-xl border transition-all"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--bg-card)' }}
+            onMouseEnter={e => { e.currentTarget.style.color='#6366f1'; e.currentTarget.style.borderColor='rgba(99,102,241,0.3)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='var(--text-secondary)'; e.currentTarget.style.borderColor='var(--border)'; }}>
             {viewMode === 'grid' ? <List size={17} /> : <Grid size={17} />}
           </button>
         </div>
       </div>
 
-      <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#334155' }}>{filtered.length} results found</p>
+      <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'var(--text-muted)' }}>{filtered.length} results found</p>
 
       <motion.div layout className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
         <AnimatePresence>
@@ -1660,9 +1663,9 @@ function CommunityPage() {
   return (
     <div className="p-5 md:p-8 max-w-3xl mx-auto">
       <div className="flex items-center gap-2 mb-6">
-        <Globe size={20} style={{ color: '#2dd4bf' }} />
-        <h1 className="font-display text-2xl font-extrabold text-white">Community Feed</h1>
-        <span className="ml-auto text-xs font-bold px-3 py-1 rounded-full" style={{ background: 'rgba(20,184,166,0.13)', color: '#34d399', border: '1px solid rgba(20,184,166,0.22)' }}>● Live</span>
+        <Globe size={20} style={{ color: '#14b8a6' }} />
+        <h1 className="font-display text-2xl font-extrabold" style={{ color: 'var(--text-primary)' }}>Community Feed</h1>
+        <span className="ml-auto text-xs font-bold px-3 py-1 rounded-full" style={{ background: 'rgba(20,184,166,0.1)', color: '#0d9488', border: '1px solid rgba(20,184,166,0.2)' }}>● Live</span>
       </div>
 
       {/* Compose */}
@@ -1670,12 +1673,12 @@ function CommunityPage() {
         <div className="flex items-start gap-3">
           <img src="https://i.pravatar.cc/150?u=currentuser" className="w-10 h-10 rounded-full border object-cover" style={{ borderColor: 'rgba(124,58,237,0.3)' }} alt="" />
           <div className="flex-1">
-            <textarea value={newPost} onChange={e => setNewPost(e.target.value)}
+          <textarea value={newPost} onChange={e => setNewPost(e.target.value)}
               placeholder="Share something with the community..."
-              className="w-full glass border rounded-xl px-4 py-3 text-sm placeholder:text-slate-600 resize-none h-20 transition-colors bg-transparent"
-              style={{ borderColor: 'rgba(255,255,255,0.07)', color: '#e2e8f0' }}
-              onFocus={e => e.target.style.borderColor='rgba(124,58,237,0.38)'}
-              onBlur={e => e.target.style.borderColor='rgba(255,255,255,0.07)'} />
+              className="w-full rounded-xl px-4 py-3 text-sm resize-none h-20 transition-colors border"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)', background: 'var(--bg-secondary)', outline: 'none' }}
+              onFocus={e => e.target.style.borderColor='rgba(99,102,241,0.38)'}
+              onBlur={e => e.target.style.borderColor='var(--border)'} />
             <div className="flex justify-between items-center mt-2">
               <div className="flex gap-2" style={{ color: '#475569' }}>
                 {[<SmilePlus size={17} />, <Camera size={17} />, <Hash size={17} />].map((icon, i) => (
