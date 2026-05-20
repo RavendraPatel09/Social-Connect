@@ -1455,88 +1455,90 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
 function ProfileCard({ profile, isSaved, onSave, minimal = false }) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <motion.div layout className="glass rounded-2xl border overflow-hidden card-lift" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
-      <div className="relative h-20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(14,165,233,0.09))' }}>
-        {profile.cover && <img src={profile.cover} alt="" className="w-full h-full object-cover opacity-20" />}
+    <motion.div layout className="rounded-2xl border overflow-hidden card-lift" style={{ borderColor: 'var(--border)', background: 'var(--bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+      <div className="relative h-20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(14,165,233,0.06))' }}>
+        {profile.cover && <img src={profile.cover} alt="" className="w-full h-full object-cover opacity-25" />}
         {!minimal && onSave && (
           <button onClick={e => { e.stopPropagation(); onSave(); }}
-            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full glass flex items-center justify-center border transition-all"
-            style={isSaved ? { borderColor: 'rgba(124,58,237,0.65)', color: '#a78bfa' } : { borderColor: 'rgba(255,255,255,0.1)', color: '#475569' }}>
-            <Bookmark size={14} style={isSaved ? { fill: '#a78bfa' } : {}} />
+            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center border transition-all"
+            style={isSaved
+              ? { background: 'rgba(99,102,241,0.12)', borderColor: 'rgba(99,102,241,0.4)', color: '#6366f1' }
+              : { background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+            <Bookmark size={14} style={isSaved ? { fill: '#6366f1' } : {}} />
           </button>
         )}
         <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold"
           style={profile.available
-            ? { background: 'rgba(20,184,166,0.18)', color: '#2dd4bf' }
-            : { background: 'rgba(255,255,255,0.06)', color: '#475569' }}>
+            ? { background: 'rgba(20,184,166,0.15)', color: '#0d9488' }
+            : { background: 'rgba(15,23,42,0.06)', color: 'var(--text-muted)' }}>
           {profile.available ? '● Available' : 'Busy'}
         </div>
       </div>
       <div className="px-5 pb-5">
         <div className="flex items-end justify-between -mt-7 mb-3">
           <img src={profile.img} alt={profile.name} className="w-14 h-14 rounded-2xl border-2 object-cover"
-            style={{ borderColor: '#05050f', boxShadow: '0 0 20px rgba(0,0,0,0.5)' }} />
+            style={{ borderColor: 'var(--bg-card)', boxShadow: 'var(--shadow-md)' }} />
           <div className="flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full"
-            style={{ background: 'rgba(245,158,11,0.1)', color: '#fbbf24' }}>
-            <Star size={10} style={{ fill: '#fbbf24' }} /> {profile.rating} ({profile.reviews})
+            style={{ background: 'rgba(245,158,11,0.1)', color: '#d97706' }}>
+            <Star size={10} style={{ fill: '#f59e0b' }} /> {profile.rating} ({profile.reviews})
           </div>
         </div>
         <div className="flex items-start justify-between mb-1">
           <div>
             <div className="flex items-center gap-1.5">
-              <h3 className="font-bold text-white">{profile.name}</h3>
-              {profile.verified && <CheckCircle2 size={13} className="text-violet-400" />}
+              <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>{profile.name}</h3>
+              {profile.verified && <CheckCircle2 size={13} style={{ color: '#6366f1' }} />}
             </div>
-            <p className="text-xs font-medium" style={{ color: '#475569' }}>{profile.handle}</p>
+            <p className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>{profile.handle}</p>
           </div>
           {profile.rate
-            ? <span className="font-bold text-sm" style={{ color: '#2dd4bf' }}>{profile.rate}</span>
-            : <span className="text-xs font-bold" style={{ color: '#64748b' }}>{profile.followers} <span style={{ color: '#334155' }}>followers</span></span>}
+            ? <span className="font-bold text-sm" style={{ color: '#0d9488' }}>{profile.rate}</span>
+            : <span className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>{profile.followers} <span style={{ color: 'var(--text-muted)' }}>followers</span></span>}
         </div>
-        <div className="flex items-center gap-1 text-xs font-medium mb-3" style={{ color: '#334155' }}>
+        <div className="flex items-center gap-1 text-xs font-medium mb-3" style={{ color: 'var(--text-muted)' }}>
           <MapPin size={10} /> {profile.location}
         </div>
         {profile.matchScore && (
           <div className="mb-3">
-            <div className="flex justify-between text-[10px] font-bold mb-1" style={{ color: '#475569' }}>
-              <span>AI Match Score</span><span style={{ color: '#a78bfa' }}>{profile.matchScore}%</span>
+            <div className="flex justify-between text-[10px] font-bold mb-1" style={{ color: 'var(--text-secondary)' }}>
+              <span>AI Match Score</span><span style={{ color: '#6366f1' }}>{profile.matchScore}%</span>
             </div>
-            <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+            <div className="h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
               <motion.div initial={{ width: 0 }} whileInView={{ width: `${profile.matchScore}%` }} viewport={{ once: true }} transition={{ duration: 0.9 }}
                 className="h-full rounded-full"
-                style={{ background: profile.matchScore >= 90 ? 'linear-gradient(90deg, #14b8a6, #7c3aed)' : 'linear-gradient(90deg, #7c3aed, #4f46e5)' }} />
+                style={{ background: profile.matchScore >= 90 ? 'linear-gradient(90deg, #14b8a6, #6366f1)' : 'linear-gradient(90deg, #6366f1, #4f46e5)' }} />
             </div>
           </div>
         )}
         <div className="flex flex-wrap gap-1.5 mb-3">
           {profile.tags.map(tag => (
             <span key={tag} className="px-2.5 py-1 text-xs font-semibold rounded-lg"
-              style={{ background: 'rgba(255,255,255,0.055)', color: '#94a3b8' }}>
+              style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>
               {tag}
             </span>
           ))}
         </div>
         {!minimal && (
           <>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: '#94a3b8' }}>{profile.bio}</p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>{profile.bio}</p>
             <div className="flex gap-2">
               <button className="flex-1 py-2 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all glow-violet"
-                style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}>
+                style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
                 <MessageCircle size={14} /> Message
               </button>
               <button onClick={() => setExpanded(!expanded)}
-                className="px-3 py-2 glass border text-sm rounded-xl transition-all"
-                style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#64748b' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.2)'; e.currentTarget.style.color='#f1f5f9'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.09)'; e.currentTarget.style.color='#64748b'; }}>
+                className="px-3 py-2 text-sm rounded-xl border transition-all"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--bg-tertiary)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(99,102,241,0.3)'; e.currentTarget.style.color='#6366f1'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border)'; e.currentTarget.style.color='var(--text-secondary)'; }}>
                 <MoreHorizontal size={15} />
               </button>
             </div>
             <AnimatePresence>
               {expanded && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mt-3 overflow-hidden">
-                  <div className="rounded-xl p-3 text-xs leading-relaxed" style={{ background: 'rgba(124,58,237,0.09)', border: '1px solid rgba(124,58,237,0.2)', color: '#cbd5e1' }}>
-                    <span className="font-bold text-violet-400">AI Insight: </span>{profile.aiInsight}
+                  <div className="rounded-xl p-3 text-xs leading-relaxed" style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.18)', color: 'var(--text-secondary)' }}>
+                    <span className="font-bold" style={{ color: '#6366f1' }}>AI Insight: </span>{profile.aiInsight}
                   </div>
                 </motion.div>
               )}
