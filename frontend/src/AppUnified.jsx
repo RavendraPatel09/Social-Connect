@@ -267,60 +267,6 @@ function AnimatedBackground({ dark }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   CUSTOM CURSOR (desktop only)
-───────────────────────────────────────────── */
-function CustomCursor() {
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  const springX = useSpring(cursorX, { stiffness: 700, damping: 42 });
-  const springY = useSpring(cursorY, { stiffness: 700, damping: 42 });
-  const trailX  = useSpring(cursorX, { stiffness: 140, damping: 22 });
-  const trailY  = useSpring(cursorY, { stiffness: 140, damping: 22 });
-  const [clicking, setClicking] = useState(false);
-  const [hovering, setHovering] = useState(false);
-
-  useEffect(() => {
-    const move   = (e) => { cursorX.set(e.clientX); cursorY.set(e.clientY); };
-    const down   = () => setClicking(true);
-    const up     = () => setClicking(false);
-    const over   = (e) => setHovering(!!e.target.closest('button,a,[role="button"],input,textarea,select'));
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mousedown', down);
-    window.addEventListener('mouseup',   up);
-    window.addEventListener('mouseover', over);
-    return () => {
-      window.removeEventListener('mousemove', move);
-      window.removeEventListener('mousedown', down);
-      window.removeEventListener('mouseup',   up);
-      window.removeEventListener('mouseover', over);
-    };
-  }, []);
-
-  return (
-    <div className="hidden md:block">
-      {/* Trail */}
-      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-screen"
-        style={{ x: trailX, y: trailY, translateX: '-50%', translateY: '-50%' }}>
-        <motion.div
-          animate={{ width: hovering ? 40 : 22, height: hovering ? 40 : 22, opacity: hovering ? 0.28 : 0.14 }}
-          transition={{ duration: 0.18 }}
-          className="rounded-full"
-          style={{ background: 'radial-gradient(circle, #a78bfa, transparent)' }}
-        />
-      </motion.div>
-      {/* Dot */}
-      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9999]"
-        style={{ x: springX, y: springY, translateX: '-50%', translateY: '-50%' }}>
-        <motion.div
-          animate={{ width: clicking ? 5 : hovering ? 11 : 8, height: clicking ? 5 : hovering ? 11 : 8, background: hovering ? '#a78bfa' : '#ffffff' }}
-          transition={{ duration: 0.12 }}
-          className="rounded-full"
-        />
-      </motion.div>
-    </div>
-  );
-}
 
 /* ─────────────────────────────────────────────
    SPARKLINE CHART
@@ -627,7 +573,6 @@ export default function App() {
   return (
     <div className="min-h-screen theme-transition" style={{ background: 'var(--bg-base)', color: 'var(--text-primary)', fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
       <AnimatedBackground dark={darkMode} />
-      <CustomCursor />
       <div className="relative z-10">
         <AnimatePresence mode="wait">
           <motion.div key={view}
