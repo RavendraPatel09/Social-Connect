@@ -239,24 +239,29 @@ const LEADERBOARD_DATA = {
 /* ─────────────────────────────────────────────
    ANIMATED BACKGROUND
 ───────────────────────────────────────────── */
-function AnimatedBackground() {
+function AnimatedBackground({ dark }) {
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.09) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(14,165,233,0.07) 0%, transparent 55%), radial-gradient(ellipse at 50% 90%, rgba(20,184,166,0.05) 0%, transparent 55%), #05050f'
+        background: dark
+          ? 'radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.09) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(14,165,233,0.07) 0%, transparent 55%), radial-gradient(ellipse at 50% 90%, rgba(20,184,166,0.05) 0%, transparent 55%), #05050f'
+          : 'radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.06) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(14,165,233,0.05) 0%, transparent 55%), radial-gradient(ellipse at 50% 90%, rgba(20,184,166,0.04) 0%, transparent 55%), #f1f5f9'
       }} />
-      <div className="blob-1 absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-[0.05]"
-        style={{ background: 'radial-gradient(circle, #7c3aed, transparent)' }} />
-      <div className="blob-2 absolute top-3/4 right-1/4 w-80 h-80 rounded-full opacity-[0.04]"
-        style={{ background: 'radial-gradient(circle, #0ea5e9, transparent)' }} />
-      <div className="blob-3 absolute top-1/2 right-1/3 w-64 h-64 rounded-full opacity-[0.03]"
-        style={{ background: 'radial-gradient(circle, #f59e0b, transparent)' }} />
-      <div className="blob-4 absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full opacity-[0.035]"
-        style={{ background: 'radial-gradient(circle, #14b8a6, transparent)' }} />
+      <div className="blob-1 absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+        style={{ background: dark ? 'radial-gradient(circle, rgba(124,58,237,0.12), transparent)' : 'radial-gradient(circle, rgba(99,102,241,0.1), transparent)' }} />
+      <div className="blob-2 absolute top-3/4 right-1/4 w-80 h-80 rounded-full"
+        style={{ background: dark ? 'radial-gradient(circle, rgba(14,165,233,0.08), transparent)' : 'radial-gradient(circle, rgba(14,165,233,0.07), transparent)' }} />
+      <div className="blob-3 absolute top-1/2 right-1/3 w-64 h-64 rounded-full"
+        style={{ background: dark ? 'radial-gradient(circle, rgba(245,158,11,0.06), transparent)' : 'radial-gradient(circle, rgba(20,184,166,0.06), transparent)' }} />
+      <div className="blob-4 absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full"
+        style={{ background: dark ? 'radial-gradient(circle, rgba(20,184,166,0.07), transparent)' : 'radial-gradient(circle, rgba(245,158,11,0.05), transparent)' }} />
       {/* Subtle dot grid */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{
-        backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
-        backgroundSize: '40px 40px'
+      <div className="absolute inset-0" style={{
+        backgroundImage: dark
+          ? 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)'
+          : 'radial-gradient(rgba(15,23,42,0.12) 1px, transparent 1px)',
+        backgroundSize: '44px 44px',
+        opacity: 0.018
       }} />
     </div>
   );
@@ -588,10 +593,10 @@ function Logo() {
   return (
     <div className="flex items-center gap-2.5">
       <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-lg shrink-0"
-        style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', boxShadow: '0 4px 20px rgba(124,58,237,0.45)' }}>
+        style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', boxShadow: '0 4px 20px rgba(99,102,241,0.35)' }}>
         <Sparkles size={15} />
       </div>
-      <span className="font-display font-extrabold text-lg text-white tracking-tight">CollabHub</span>
+      <span className="font-display font-extrabold text-lg tracking-tight" style={{ color: 'var(--text-primary)' }}>CollabHub</span>
     </div>
   );
 }
@@ -603,12 +608,22 @@ export default function App() {
   const [view, setView] = useState('landing');
   const [userRole, setUserRole] = useState(null);
   const [savedProfiles, setSavedProfiles] = useState([PROFILES[1]]);
+  const [darkMode, setDarkMode] = useState(false);
   const navigate = useCallback((v) => setView(v), []);
   const isInDashboard = ['dashboard','explore','community','projects','chat','notifications','leaderboard','analytics','saved','profile','settings'].includes(view);
 
+  // Apply dark mode class to html element
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   return (
-    <div className="min-h-screen" style={{ background: '#05050f', color: '#f1f5f9', fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
-      <AnimatedBackground />
+    <div className="min-h-screen theme-transition" style={{ background: 'var(--bg-base)', color: 'var(--text-primary)', fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+      <AnimatedBackground dark={darkMode} />
       <CustomCursor />
       <div className="relative z-10">
         <AnimatePresence mode="wait">
@@ -616,10 +631,10 @@ export default function App() {
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -14 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="h-full">
-            {view === 'landing'   && <LandingPage onNavigate={navigate} />}
+            {view === 'landing'   && <LandingPage onNavigate={navigate} darkMode={darkMode} setDarkMode={setDarkMode} />}
             {view === 'business'  && <BusinessLanding onNavigate={navigate} />}
-            {view === 'auth'      && <AuthFlow onComplete={(role) => { setUserRole(role); navigate('dashboard'); }} onBack={() => navigate('landing')} />}
-            {isInDashboard        && <AppShell view={view} setView={navigate} userRole={userRole} savedProfiles={savedProfiles} setSavedProfiles={setSavedProfiles} />}
+            {view === 'auth'      && <AuthFlow onComplete={(role) => { setUserRole(role); navigate('dashboard'); }} onBack={() => navigate('landing')} darkMode={darkMode} />}
+            {isInDashboard        && <AppShell view={view} setView={navigate} userRole={userRole} savedProfiles={savedProfiles} setSavedProfiles={setSavedProfiles} darkMode={darkMode} setDarkMode={setDarkMode} />}
           </motion.div>
         </AnimatePresence>
       </div>
