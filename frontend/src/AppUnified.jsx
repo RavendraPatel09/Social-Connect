@@ -601,43 +601,49 @@ function LandingPage({ onNavigate, darkMode, setDarkMode }) {
     { value: '98%',  label: 'Satisfaction' },
   ];
   const features = [
-    { icon: <Bot size={22} />,      color: '#6366f1', title: 'AI-Powered Matching',  desc: 'Neural engine analyzing 120+ compatibility signals to find your perfect collaborator instantly.' },
-    { icon: <Shield size={22} />,   color: '#14b8a6', title: 'Verified Profiles',    desc: 'Every provider is background-checked, portfolio-verified, and rated by real creators.' },
-    { icon: <Zap size={22} />,      color: '#0ea5e9', title: 'Instant Setup',        desc: 'From sign-up to first collaboration in under 10 minutes with guided AI onboarding.' },
-    { icon: <BarChart2 size={22} />,color: '#f59e0b', title: 'Live Analytics',       desc: 'Track campaign performance, engagement rates, and ROI from your personal dashboard.' },
+    { icon: <Bot size={22} />,      color: '#7C3AED', title: 'AI-Powered Matching',  desc: 'Neural engine analyzing 120+ compatibility signals to find your perfect collaborator instantly.' },
+    { icon: <Shield size={22} />,   color: '#06B6D4', title: 'Verified Profiles',    desc: 'Every provider is background-checked, portfolio-verified, and rated by real creators.' },
+    { icon: <Zap size={22} />,      color: '#f59e0b', title: 'Instant Setup',        desc: 'From sign-up to first collaboration in under 10 minutes with guided AI onboarding.' },
+    { icon: <BarChart2 size={22} />,color: '#10b981', title: 'Live Analytics',       desc: 'Track campaign performance, engagement rates, and ROI from your personal dashboard.' },
   ];
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
       {/* Nav */}
-      <nav className="sticky top-0 z-40 glass-dark border-b" style={{ borderColor: 'var(--glass-border)' }}>
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Logo />
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+      <nav className="sticky top-0 z-40 backdrop-blur-md border-b" style={{ background: 'var(--glass-bg)', borderColor: 'var(--glass-border)' }}>
+        <div className="max-w-7xl mx-auto px-6 h-16 grid grid-cols-2 md:grid-cols-3 items-center">
+          <div className="flex justify-start">
+            <Logo />
+          </div>
+          
+          <div className="hidden md:flex items-center justify-center gap-8 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
             {['Features', 'Pricing', 'Blog'].map(item => (
-              <button key={item} className="hover:text-indigo-600 transition-colors">{item}</button>
+              <button key={item} className="hover:text-indigo-600 transition-colors cursor-pointer">{item}</button>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+
+          <div className="flex items-center justify-end gap-4">
             {/* Dark mode toggle */}
             <button
               onClick={() => setDarkMode(d => !d)}
-              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
-              style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}
+              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:bg-gray-100 dark:hover:bg-zinc-800 cursor-pointer"
+              style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
               title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               <span style={{ fontSize: 16 }}>{darkMode ? '☀️' : '🌙'}</span>
             </button>
-            <button onClick={() => onNavigate('auth')} className="hidden md:block text-sm font-semibold px-4 py-2 transition-colors" style={{ color: 'var(--text-secondary)' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#6366f1'}
+            
+            <button onClick={() => onNavigate('auth')} className="text-sm font-semibold px-4 py-2 transition-colors cursor-pointer" style={{ color: 'var(--text-secondary)' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#7C3AED'}
               onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
             >
               Log in
             </button>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+            
+            <motion.button whileHover={{ scale: 1.04, boxShadow: '0 4px 20px rgba(124, 58, 237, 0.4)' }} whileTap={{ scale: 0.97 }}
               onClick={() => onNavigate('auth')}
-              className="px-5 py-2.5 text-sm font-bold text-white rounded-xl glow-violet transition-all"
-              style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
+              className="hidden sm:block px-5 py-2.5 text-sm font-bold text-white rounded-full transition-all cursor-pointer"
+              style={{ background: 'linear-gradient(135deg, #7C3AED, #06B6D4)' }}>
               Get Started Free
             </motion.button>
           </div>
@@ -645,36 +651,44 @@ function LandingPage({ onNavigate, darkMode, setDarkMode }) {
       </nav>
 
       {/* Hero */}
-      <section className="relative flex-1 flex items-center py-28 px-6 overflow-hidden">
-        <div className="max-w-5xl mx-auto text-center w-full">
+      <section className="relative flex-1 flex items-center py-24 md:py-32 px-6 overflow-hidden">
+        {/* Soft radial gradient blob in the hero background (purple + cyan, low opacity) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full filter blur-[120px] opacity-[0.07] dark:opacity-[0.12]"
+            style={{ background: 'radial-gradient(circle, #7C3AED 0%, #06B6D4 100%)' }} />
+        </div>
+
+        <div className="max-w-5xl mx-auto text-center w-full relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.7 }}>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
               className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full border mb-8"
-              style={{ borderColor: 'rgba(99,102,241,0.3)', background: 'rgba(99,102,241,0.08)', color: '#6366f1' }}>
+              style={{ borderColor: 'rgba(124, 90, 237, 0.2)', background: 'rgba(124, 90, 237, 0.05)', color: '#7C3AED' }}>
               <Bot size={11} /> AI-Powered Creator Platform
             </motion.div>
 
-            <h1 className="font-display text-6xl md:text-8xl font-extrabold leading-[1.05] mb-8 tracking-tight" style={{ color: 'var(--text-primary)' }}>
-              Where Creators<br />
-              <span className="gradient-text">Meet Their Match</span>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.1] mb-8 tracking-tight" style={{ color: 'var(--text-primary)' }}>
+              Creators Meet<br />
+              <span className="gradient-text">Their Match</span>
             </h1>
 
-            <p className="max-w-2xl mx-auto text-xl leading-relaxed mb-12" style={{ color: 'var(--text-secondary)' }}>
+            <p className="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed mb-12" style={{ color: 'var(--text-secondary)' }}>
               CollabHub uses advanced AI to connect content creators with elite editors, designers, and strategists — turning good content into unforgettable brands.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <motion.button whileHover={{ scale: 1.04, y: -3, boxShadow: '0 8px 30px rgba(124, 58, 237, 0.4)' }} whileTap={{ scale: 0.97 }}
                 onClick={() => onNavigate('auth')}
-                className="px-10 py-4 text-base font-bold text-white rounded-2xl btn-gradient glow-violet flex items-center gap-2 justify-center">
-                Start for Free <ArrowRight size={18} />
+                className="w-full sm:w-auto px-10 py-4 text-base font-bold text-white rounded-full flex items-center gap-2 justify-center cursor-pointer transition-all duration-300"
+                style={{ background: 'linear-gradient(135deg, #7C3AED, #06B6D4)' }}>
+                Start for Free →
               </motion.button>
-              <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate('business')}
-                className="px-10 py-4 text-base font-semibold rounded-2xl transition-all border"
-                style={{ borderColor: 'var(--glass-border)', color: 'var(--text-secondary)', background: 'var(--bg-card)' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(99,102,241,0.35)'; e.currentTarget.style.color='#6366f1'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor='var(--glass-border)'; e.currentTarget.style.color='var(--text-secondary)'; }}>
+              
+              <motion.button whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} onClick={() => onNavigate('business')}
+                className="w-full sm:w-auto px-10 py-4 text-base font-semibold rounded-full transition-all border cursor-pointer"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)', background: 'var(--bg-card)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124, 58, 237, 0.35)'; e.currentTarget.style.color='#7C3AED'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border)'; e.currentTarget.style.color='var(--text-secondary)'; }}>
                 View Business Demo
               </motion.button>
             </div>
@@ -687,8 +701,8 @@ function LandingPage({ onNavigate, darkMode, setDarkMode }) {
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="text-center">
-              <div className="font-display text-4xl font-extrabold mb-1 gradient-text">{s.value}</div>
-              <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>{s.label}</div>
+              <div className="font-display text-4xl md:text-5xl font-extrabold mb-1 gradient-text">{s.value}</div>
+              <div className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>{s.label}</div>
             </motion.div>
           ))}
         </div>
@@ -721,15 +735,21 @@ function LandingPage({ onNavigate, darkMode, setDarkMode }) {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 mx-6 my-12 rounded-3xl"
-        style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(79,70,229,0.08), rgba(14,165,233,0.06))', border: '1px solid rgba(99,102,241,0.18)' }}>
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="py-24 px-6 mx-6 my-12 rounded-3xl relative overflow-hidden"
+        style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)' }}>
+        {/* Soft background blob in CTA */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full filter blur-[80px] opacity-[0.05]"
+            style={{ background: 'radial-gradient(circle, #7C3AED 0%, #06B6D4 100%)' }} />
+        </div>
+
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="font-display text-4xl font-extrabold mb-4" style={{ color: 'var(--text-primary)' }}>Ready to build your creative empire?</h2>
           <p className="text-lg mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>Join 50,000+ creators already leveling up with AI-matched collaborators.</p>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+          <motion.button whileHover={{ scale: 1.05, boxShadow: '0 8px 30px rgba(124, 58, 237, 0.4)' }} whileTap={{ scale: 0.97 }}
             onClick={() => onNavigate('auth')}
-            className="px-10 py-4 font-extrabold rounded-2xl shadow-lg transition text-white"
-            style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', boxShadow: '0 8px 32px rgba(99,102,241,0.3)' }}>
+            className="px-10 py-4 font-extrabold rounded-full text-white cursor-pointer transition-all duration-300 shadow-md"
+            style={{ background: 'linear-gradient(135deg, #7C3AED, #06B6D4)' }}>
             Join Free Today
           </motion.button>
         </div>
@@ -737,9 +757,9 @@ function LandingPage({ onNavigate, darkMode, setDarkMode }) {
 
       <footer className="border-t py-10 px-6 text-center text-sm" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
         © 2026 CollabHub, Inc. ·{' '}
-        <button className="hover:text-indigo-600 transition-colors">Privacy</button> ·{' '}
-        <button className="hover:text-indigo-600 transition-colors">Terms</button> ·{' '}
-        <button className="hover:text-indigo-600 transition-colors">Support</button>
+        <button className="hover:text-indigo-600 transition-colors cursor-pointer">Privacy</button> ·{' '}
+        <button className="hover:text-indigo-600 transition-colors cursor-pointer">Terms</button> ·{' '}
+        <button className="hover:text-indigo-600 transition-colors cursor-pointer">Support</button>
       </footer>
     </div>
   );
