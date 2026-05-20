@@ -1000,7 +1000,7 @@ function AuthFlow({ onComplete, onBack }) {
 /* ─────────────────────────────────────────────
    APP SHELL (with mobile bottom nav)
 ───────────────────────────────────────────── */
-function AppShell({ view, setView, userRole, savedProfiles, setSavedProfiles }) {
+function AppShell({ view, setView, userRole, savedProfiles, setSavedProfiles, darkMode, setDarkMode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -1054,44 +1054,54 @@ function AppShell({ view, setView, userRole, savedProfiles, setSavedProfiles }) 
           <motion.aside
             initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }}
             transition={{ type: 'spring', damping: 26, stiffness: 260 }}
-            className="fixed left-0 top-0 bottom-0 w-[240px] z-50 md:hidden glass-dark flex flex-col"
-            style={{ borderRight: '1px solid rgba(255,255,255,0.07)' }}>
-            <div className="h-16 flex items-center justify-between px-5 border-b" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+            className="fixed left-0 top-0 bottom-0 w-[240px] z-50 md:hidden flex flex-col"
+            style={{ background: 'var(--bg-card)', borderRight: '1px solid var(--border)' }}>
+            <div className="h-16 flex items-center justify-between px-5 border-b" style={{ borderColor: 'var(--border)' }}>
               <Logo />
-              <button onClick={closeSidebar} className="text-slate-500 hover:text-white transition-colors"><X size={18} /></button>
+              <button onClick={closeSidebar} style={{ color: 'var(--text-muted)' }} className="hover:text-red-500 transition-colors"><X size={18} /></button>
             </div>
-            <div className="m-3 p-3 rounded-2xl flex items-center gap-3" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.18)' }}>
-              <img src="https://i.pravatar.cc/150?u=currentuser" alt="You" className="w-9 h-9 rounded-full border object-cover" style={{ borderColor: 'rgba(124,58,237,0.4)' }} />
+            <div className="m-3 p-3 rounded-2xl flex items-center gap-3" style={{ background: 'var(--violet-light)', border: '1px solid rgba(99,102,241,0.2)' }}>
+              <img src="https://i.pravatar.cc/150?u=currentuser" alt="You" className="w-9 h-9 rounded-full border object-cover" style={{ borderColor: 'rgba(99,102,241,0.4)' }} />
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-sm text-white truncate">Alex Creator</p>
-                <p className="text-xs font-semibold text-violet-400">{userRole === 'provider' ? 'Provider' : 'Creator'}</p>
+                <p className="font-bold text-sm truncate" style={{ color: 'var(--text-primary)' }}>Alex Creator</p>
+                <p className="text-xs font-semibold" style={{ color: '#6366f1' }}>{userRole === 'provider' ? 'Provider' : 'Creator'}</p>
               </div>
-              <div className="w-2 h-2 rounded-full" style={{ background: '#14b8a6', boxShadow: '0 0 6px rgba(20,184,166,0.8)' }} />
+              <div className="w-2 h-2 rounded-full" style={{ background: '#14b8a6', boxShadow: '0 0 6px rgba(20,184,166,0.6)' }} />
             </div>
             <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-0.5 no-scrollbar">
               {navItems.map(item => (
                 <button key={item.id} onClick={() => { setView(item.id); closeSidebar(); }}
                   className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all"
-                  style={view === item.id ? { background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.32)', color: '#f1f5f9' } : { border: '1px solid transparent', color: '#475569' }}>
+                  style={view === item.id
+                    ? { background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', color: '#6366f1' }
+                    : { border: '1px solid transparent', color: 'var(--text-secondary)' }}>
                   <div className="flex items-center gap-3">
-                    <span style={{ color: view === item.id ? '#a78bfa' : '#475569' }}>{item.icon}</span>
+                    <span style={{ color: view === item.id ? '#6366f1' : 'var(--text-muted)' }}>{item.icon}</span>
                     {item.label}
                   </div>
                   {item.badge && (
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
-                      style={{ background: item.badge === 'New' ? '#14b8a6' : '#7c3aed' }}>
+                      style={{ background: item.badge === 'New' ? '#14b8a6' : '#6366f1' }}>
                       {item.badge}
                     </span>
                   )}
                 </button>
               ))}
             </nav>
-            <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+            <div className="p-4 border-t space-y-2" style={{ borderColor: 'var(--border)' }}>
+              <button
+                onClick={() => setDarkMode(d => !d)}
+                className="flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold rounded-xl w-full transition-all"
+                style={{ color: 'var(--text-secondary)' }}
+                onMouseEnter={e => { e.currentTarget.style.background='var(--bg-tertiary)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background='transparent'; }}>
+                <span>{darkMode ? '☀️' : '🌙'}</span> {darkMode ? 'Light Mode' : 'Dark Mode'}
+              </button>
               <button onClick={() => { setView('landing'); closeSidebar(); }}
-                className="flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold rounded-xl w-full transition-colors"
-                style={{ color: '#475569' }}
-                onMouseEnter={e => { e.currentTarget.style.color='#f87171'; e.currentTarget.style.background='rgba(244,63,94,0.07)'; }}
-                onMouseLeave={e => { e.currentTarget.style.color='#475569'; e.currentTarget.style.background='transparent'; }}>
+                className="flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold rounded-xl w-full transition-all"
+                style={{ color: 'var(--text-secondary)' }}
+                onMouseEnter={e => { e.currentTarget.style.color='#ef4444'; e.currentTarget.style.background='rgba(239,68,68,0.06)'; }}
+                onMouseLeave={e => { e.currentTarget.style.color='var(--text-secondary)'; e.currentTarget.style.background='transparent'; }}>
                 <LogOut size={16} /> Sign Out
               </button>
             </div>
@@ -1100,46 +1110,54 @@ function AppShell({ view, setView, userRole, savedProfiles, setSavedProfiles }) 
       </AnimatePresence>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-[220px] flex-col h-screen shrink-0 glass-dark border-r" style={{ borderColor: 'rgba(255,255,255,0.065)' }}>
-        <div className="h-16 flex items-center px-5 border-b" style={{ borderColor: 'rgba(255,255,255,0.065)' }}>
+      <aside className="hidden md:flex w-[220px] flex-col h-screen shrink-0 border-r" style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+        <div className="h-16 flex items-center px-5 border-b" style={{ borderColor: 'var(--border)' }}>
           <Logo />
         </div>
-        <div className="m-3 p-3 rounded-2xl flex items-center gap-3" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.18)' }}>
-          <img src="https://i.pravatar.cc/150?u=currentuser" alt="You" className="w-9 h-9 rounded-full border object-cover" style={{ borderColor: 'rgba(124,58,237,0.4)' }} />
+        <div className="m-3 p-3 rounded-2xl flex items-center gap-3" style={{ background: 'var(--violet-light)', border: '1px solid rgba(99,102,241,0.2)' }}>
+          <img src="https://i.pravatar.cc/150?u=currentuser" alt="You" className="w-9 h-9 rounded-full border object-cover" style={{ borderColor: 'rgba(99,102,241,0.4)' }} />
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm text-white truncate">Alex Creator</p>
-            <p className="text-xs font-semibold text-violet-400">{userRole === 'provider' ? 'Provider' : 'Creator'}</p>
+            <p className="font-bold text-sm truncate" style={{ color: 'var(--text-primary)' }}>Alex Creator</p>
+            <p className="text-xs font-semibold" style={{ color: '#6366f1' }}>{userRole === 'provider' ? 'Provider' : 'Creator'}</p>
           </div>
-          <div className="w-2 h-2 rounded-full" style={{ background: '#14b8a6', boxShadow: '0 0 6px rgba(20,184,166,0.8)' }} />
+          <div className="w-2 h-2 rounded-full" style={{ background: '#14b8a6', boxShadow: '0 0 6px rgba(20,184,166,0.6)' }} />
         </div>
         <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-0.5 no-scrollbar">
           {navItems.map(item => (
             <button key={item.id} onClick={() => setView(item.id)}
               className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all"
               style={view === item.id
-                ? { background: 'rgba(124,58,237,0.18)', border: '1px solid rgba(124,58,237,0.32)', color: '#f1f5f9', boxShadow: '0 0 18px rgba(124,58,237,0.08)' }
-                : { border: '1px solid transparent', color: '#475569' }}
-              onMouseEnter={e => { if (view !== item.id) { e.currentTarget.style.color='#cbd5e1'; e.currentTarget.style.background='rgba(255,255,255,0.03)'; }}}
-              onMouseLeave={e => { if (view !== item.id) { e.currentTarget.style.color='#475569'; e.currentTarget.style.background='transparent'; }}}>
+                ? { background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', color: '#6366f1', boxShadow: '0 2px 12px rgba(99,102,241,0.08)' }
+                : { border: '1px solid transparent', color: 'var(--text-secondary)' }}
+              onMouseEnter={e => { if (view !== item.id) { e.currentTarget.style.color='var(--text-primary)'; e.currentTarget.style.background='var(--bg-tertiary)'; }}}
+              onMouseLeave={e => { if (view !== item.id) { e.currentTarget.style.color='var(--text-secondary)'; e.currentTarget.style.background='transparent'; }}}>
               <div className="flex items-center gap-3">
-                <span style={{ color: view === item.id ? '#a78bfa' : '#334155' }}>{item.icon}</span>
+                <span style={{ color: view === item.id ? '#6366f1' : 'var(--text-muted)' }}>{item.icon}</span>
                 {item.label}
               </div>
               {item.badge && (
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
-                  style={{ background: view === item.id ? 'rgba(124,58,237,0.5)' : item.badge === 'New' ? '#14b8a6' : '#7c3aed' }}>
+                  style={{ background: view === item.id ? 'rgba(99,102,241,0.5)' : item.badge === 'New' ? '#14b8a6' : '#6366f1' }}>
                   {item.badge}
                 </span>
               )}
             </button>
           ))}
         </nav>
-        <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.065)' }}>
+        <div className="p-4 border-t space-y-2" style={{ borderColor: 'var(--border)' }}>
+          <button
+            onClick={() => setDarkMode(d => !d)}
+            className="flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold rounded-xl w-full transition-all"
+            style={{ color: 'var(--text-secondary)' }}
+            onMouseEnter={e => { e.currentTarget.style.background='var(--bg-tertiary)'; e.currentTarget.style.color='var(--text-primary)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='var(--text-secondary)'; }}>
+            <span style={{ fontSize: 14 }}>{darkMode ? '☀️' : '🌙'}</span> {darkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
           <button onClick={() => setView('landing')}
             className="flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold rounded-xl w-full transition-all"
-            style={{ color: '#475569' }}
-            onMouseEnter={e => { e.currentTarget.style.color='#f87171'; e.currentTarget.style.background='rgba(244,63,94,0.07)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color='#475569'; e.currentTarget.style.background='transparent'; }}>
+            style={{ color: 'var(--text-secondary)' }}
+            onMouseEnter={e => { e.currentTarget.style.color='#ef4444'; e.currentTarget.style.background='rgba(239,68,68,0.06)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='var(--text-secondary)'; e.currentTarget.style.background='transparent'; }}>
             <LogOut size={16} /> Sign Out
           </button>
         </div>
@@ -1148,21 +1166,21 @@ function AppShell({ view, setView, userRole, savedProfiles, setSavedProfiles }) 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {/* Mobile Top Header */}
-        <header className="md:hidden h-14 glass-dark shrink-0 flex items-center justify-between px-4"
-          style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <header className="md:hidden h-14 shrink-0 flex items-center justify-between px-4"
+          style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-card)' }}>
           <button onClick={() => setSidebarOpen(v => !v)} className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
-            style={{ color: '#64748b' }}
-            onMouseEnter={e => e.currentTarget.style.color='#f1f5f9'}
-            onMouseLeave={e => e.currentTarget.style.color='#64748b'}>
+            style={{ color: 'var(--text-secondary)' }}
+            onMouseEnter={e => e.currentTarget.style.color='var(--text-primary)'}
+            onMouseLeave={e => e.currentTarget.style.color='var(--text-secondary)'}>
             <Menu size={20} />
           </button>
           <Logo />
           <button onClick={() => setView('notifications')} className="w-9 h-9 rounded-xl flex items-center justify-center relative transition-colors"
-            style={{ background: 'rgba(124,58,237,0.12)', color: '#a78bfa' }}>
+            style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1' }}>
             <Bell size={18} />
             {unreadCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-extrabold flex items-center justify-center text-white"
-                style={{ background: '#7c3aed' }}>
+                style={{ background: '#6366f1' }}>
                 {unreadCount}
               </span>
             )}
@@ -1194,25 +1212,25 @@ function AppShell({ view, setView, userRole, savedProfiles, setSavedProfiles }) 
         </main>
 
         {/* Mobile Bottom Navigation */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 glass-dark"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingBottom: 'max(8px, env(safe-area-inset-bottom))' }}>
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30"
+          style={{ background: 'var(--bg-card)', borderTop: '1px solid var(--border)', paddingBottom: 'max(8px, env(safe-area-inset-bottom))' }}>
           <div className="flex items-center justify-around h-16 px-2">
             {mobileNavItems.map(item => {
               const isActive = view === item.id;
               return (
                 <button key={item.id} onClick={() => setView(item.id)}
                   className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all relative"
-                  style={{ color: isActive ? '#a78bfa' : '#475569' }}>
+                  style={{ color: isActive ? '#6366f1' : 'var(--text-secondary)' }}>
                   <div className="relative">
                     {isActive && (
                       <motion.span layoutId="mobile-nav-indicator"
                         className="absolute -inset-2 rounded-xl"
-                        style={{ background: 'rgba(124,58,237,0.15)' }} />
+                        style={{ background: 'rgba(99,102,241,0.1)' }} />
                     )}
                     <span className="relative">{item.icon}</span>
                     {item.badge && (
                       <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center text-white"
-                        style={{ background: '#7c3aed' }}>
+                        style={{ background: '#6366f1' }}>
                         {item.badge}
                       </span>
                     )}
