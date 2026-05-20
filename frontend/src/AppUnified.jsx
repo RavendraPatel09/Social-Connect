@@ -1301,11 +1301,11 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
         {/* Right Panel */}
         <div className="w-full lg:w-72 shrink-0">
           <GlassCard className="p-5 mb-4">
-            <div className="flex items-center gap-2 mb-5 pb-4 border-b" style={{ borderColor: 'rgba(255,255,255,0.065)' }}>
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ background: 'rgba(124,58,237,0.2)' }}>
-                <Bot size={14} className="text-violet-400" />
+            <div className="flex items-center gap-2 mb-5 pb-4 border-b" style={{ borderColor: 'var(--border)' }}>
+              <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.12)' }}>
+                <Bot size={14} style={{ color: '#6366f1' }} />
               </div>
-              <span className="font-bold text-xs uppercase tracking-widest" style={{ color: '#cbd5e1' }}>AI Match Engine</span>
+              <span className="font-bold text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>AI Match Engine</span>
             </div>
             <AnimatePresence mode="wait">
               {aiMatches ? (
@@ -1314,53 +1314,53 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
                     <motion.div key={p.id}
                       initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.12 }}
                       className="rounded-2xl p-4 border cursor-pointer transition-all"
-                      style={{ background: 'rgba(124,58,237,0.07)', borderColor: 'rgba(255,255,255,0.07)' }}
-                      onMouseEnter={e => e.currentTarget.style.borderColor='rgba(124,58,237,0.3)'}
-                      onMouseLeave={e => e.currentTarget.style.borderColor='rgba(255,255,255,0.07)'}>
+                      style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border)' }}
+                      onMouseEnter={e => e.currentTarget.style.borderColor='rgba(99,102,241,0.4)'}
+                      onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}>
                       <div className="flex items-center gap-3 mb-3">
-                        <img src={p.img} className="w-9 h-9 rounded-full border object-cover" style={{ borderColor: 'rgba(124,58,237,0.3)' }} alt="" />
+                        <img src={p.img} className="w-9 h-9 rounded-full border object-cover" style={{ borderColor: 'var(--border)' }} alt="" />
                         <div>
-                          <h4 className="font-bold text-sm text-white">{p.name}</h4>
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(20,184,166,0.18)', color: '#34d399' }}>
+                          <h4 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{p.name}</h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(20,184,166,0.15)', color: '#0d9488' }}>
                             {p.matchScore}% Match
                           </span>
                         </div>
                       </div>
                       <div className="mb-2">
-                        <div className="flex justify-between text-[10px] font-semibold mb-1" style={{ color: '#475569' }}>
-                          <span>Compatibility</span><span style={{ color: '#a78bfa' }}>{p.matchScore}%</span>
+                        <div className="flex justify-between text-[10px] font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>
+                          <span>Compatibility</span><span style={{ color: '#6366f1' }}>{p.matchScore}%</span>
                         </div>
-                        <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                        <div className="h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
                           <motion.div initial={{ width: 0 }} animate={{ width: `${p.matchScore}%` }} transition={{ duration: 1, delay: 0.3 }}
-                            className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, #7c3aed, #0ea5e9)' }} />
+                            className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, #6366f1, #0ea5e9)' }} />
                         </div>
                       </div>
-                      <p className="text-xs leading-relaxed p-2 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8' }}>
-                        <span className="font-bold text-violet-400">AI: </span>{p.aiInsight}
+                      <p className="text-xs leading-relaxed p-2 rounded-xl" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
+                        <span className="font-bold" style={{ color: '#6366f1' }}>AI: </span>{p.aiInsight}
                       </p>
                     </motion.div>
                   ))}
-                  <button onClick={() => setView('explore')} className="w-full py-2.5 text-sm font-bold text-violet-400 hover:text-violet-300 transition-colors">
+                  <button onClick={() => setView('explore')} className="w-full py-2.5 text-sm font-bold transition-colors" style={{ color: '#6366f1' }}>
                     View All Matches →
                   </button>
                 </motion.div>
               ) : aiMatchesLoading ? (
                 <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center py-10 gap-4">
                   <div className="relative w-12 h-12">
-                    <div className="absolute inset-0 rounded-full border-2" style={{ borderColor: 'rgba(124,58,237,0.2)' }} />
-                    <div className="absolute inset-0 rounded-full border-2 border-t-transparent spin-ring" style={{ borderColor: '#7c3aed', borderTopColor: 'transparent' }} />
+                    <div className="absolute inset-0 rounded-full border-2" style={{ borderColor: 'rgba(99,102,241,0.2)' }} />
+                    <div className="absolute inset-0 rounded-full border-2 border-t-transparent spin-ring" style={{ borderColor: '#6366f1', borderTopColor: 'transparent' }} />
                   </div>
-                  <p className="text-xs font-bold animate-pulse tracking-wider text-center" style={{ color: '#475569' }}>Running Neural Algorithm...</p>
+                  <p className="text-xs font-bold animate-pulse tracking-wider text-center" style={{ color: 'var(--text-secondary)' }}>Running Neural Algorithm...</p>
                 </motion.div>
               ) : (
                 <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-4">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <Lightbulb size={20} style={{ color: '#475569' }} />
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--bg-tertiary)' }}>
+                    <Lightbulb size={20} style={{ color: 'var(--text-secondary)' }} />
                   </div>
-                  <p className="text-sm mb-5 leading-relaxed" style={{ color: '#475569' }}>Discover hyper-relevant collaborators matched to your style and budget.</p>
+                  <p className="text-sm mb-5 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>Discover hyper-relevant collaborators matched to your style and budget.</p>
                   <button onClick={runAIMatch}
                     className="w-full py-3 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 glow-violet"
-                    style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}>
+                    style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
                     <Sparkles size={14} /> Generate AI Matches
                   </button>
                 </motion.div>
@@ -1369,19 +1369,19 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
           </GlassCard>
 
           <GlassCard className="p-5">
-            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#475569' }}>Quick Actions</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: 'var(--text-muted)' }}>Quick Actions</p>
             <div className="space-y-1">
               {[
-                { label: 'Generate AI Brief',     icon: <FileText size={14} />,  color: '#a78bfa', action: () => setShowBriefModal(true) },
-                { label: 'Post a collaboration',  icon: <Plus size={14} />,      color: '#38bdf8', action: () => {} },
+                { label: 'Generate AI Brief',     icon: <FileText size={14} />,  color: '#6366f1', action: () => setShowBriefModal(true) },
+                { label: 'Post a collaboration',  icon: <Plus size={14} />,      color: '#0ea5e9', action: () => {} },
                 { label: 'Upgrade to Pro',        icon: <Rocket size={14} />,    color: '#f59e0b', action: () => {} },
-                { label: 'Invite a colleague',    icon: <Users size={14} />,     color: '#34d399', action: () => {} },
+                { label: 'Invite a colleague',    icon: <Users size={14} />,     color: '#14b8a6', action: () => {} },
               ].map(action => (
                 <button key={action.label} onClick={action.action}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all"
-                  style={{ color: '#64748b' }}
-                  onMouseEnter={e => { e.currentTarget.style.color='#f1f5f9'; e.currentTarget.style.background='rgba(255,255,255,0.04)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color='#64748b'; e.currentTarget.style.background='transparent'; }}>
+                  style={{ color: 'var(--text-secondary)' }}
+                  onMouseEnter={e => { e.currentTarget.style.color='var(--text-primary)'; e.currentTarget.style.background='var(--bg-tertiary)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color='var(--text-secondary)'; e.currentTarget.style.background='transparent'; }}>
                   <span style={{ color: action.color }}>{action.icon}</span> {action.label}
                 </button>
               ))}
