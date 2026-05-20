@@ -645,7 +645,7 @@ export default function App() {
 /* ─────────────────────────────────────────────
    LANDING PAGE
 ───────────────────────────────────────────── */
-function LandingPage({ onNavigate }) {
+function LandingPage({ onNavigate, darkMode, setDarkMode }) {
   const stats = [
     { value: '50K+', label: 'Active Creators' },
     { value: '12K+', label: 'Service Providers' },
@@ -653,31 +653,43 @@ function LandingPage({ onNavigate }) {
     { value: '98%',  label: 'Satisfaction' },
   ];
   const features = [
-    { icon: <Bot size={22} />,      color: '#7c3aed', title: 'AI-Powered Matching',  desc: 'Neural engine analyzing 120+ compatibility signals to find your perfect collaborator instantly.' },
+    { icon: <Bot size={22} />,      color: '#6366f1', title: 'AI-Powered Matching',  desc: 'Neural engine analyzing 120+ compatibility signals to find your perfect collaborator instantly.' },
     { icon: <Shield size={22} />,   color: '#14b8a6', title: 'Verified Profiles',    desc: 'Every provider is background-checked, portfolio-verified, and rated by real creators.' },
     { icon: <Zap size={22} />,      color: '#0ea5e9', title: 'Instant Setup',        desc: 'From sign-up to first collaboration in under 10 minutes with guided AI onboarding.' },
     { icon: <BarChart2 size={22} />,color: '#f59e0b', title: 'Live Analytics',       desc: 'Track campaign performance, engagement rates, and ROI from your personal dashboard.' },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
       {/* Nav */}
-      <nav className="sticky top-0 z-40 glass-dark border-b" style={{ borderColor: 'rgba(255,255,255,0.055)' }}>
+      <nav className="sticky top-0 z-40 glass-dark border-b" style={{ borderColor: 'var(--glass-border)' }}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Logo />
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: '#64748b' }}>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
             {['Features', 'Pricing', 'Blog'].map(item => (
-              <button key={item} className="hover:text-white transition-colors">{item}</button>
+              <button key={item} className="hover:text-indigo-600 transition-colors">{item}</button>
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <button onClick={() => onNavigate('auth')} className="hidden md:block text-sm font-semibold px-4 py-2 transition-colors hover:text-white" style={{ color: '#64748b' }}>
+            {/* Dark mode toggle */}
+            <button
+              onClick={() => setDarkMode(d => !d)}
+              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+              style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}
+              title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              <span style={{ fontSize: 16 }}>{darkMode ? '☀️' : '🌙'}</span>
+            </button>
+            <button onClick={() => onNavigate('auth')} className="hidden md:block text-sm font-semibold px-4 py-2 transition-colors" style={{ color: 'var(--text-secondary)' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#6366f1'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
               Log in
             </button>
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={() => onNavigate('auth')}
               className="px-5 py-2.5 text-sm font-bold text-white rounded-xl glow-violet transition-all"
-              style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}>
+              style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
               Get Started Free
             </motion.button>
           </div>
@@ -691,16 +703,16 @@ function LandingPage({ onNavigate }) {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
               className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full border mb-8"
-              style={{ borderColor: 'rgba(124,58,237,0.38)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa' }}>
+              style={{ borderColor: 'rgba(99,102,241,0.3)', background: 'rgba(99,102,241,0.08)', color: '#6366f1' }}>
               <Bot size={11} /> AI-Powered Creator Platform
             </motion.div>
 
-            <h1 className="font-display text-6xl md:text-8xl font-extrabold leading-[1.05] mb-8 tracking-tight">
-              <span className="text-white">Where Creators</span><br />
+            <h1 className="font-display text-6xl md:text-8xl font-extrabold leading-[1.05] mb-8 tracking-tight" style={{ color: 'var(--text-primary)' }}>
+              Where Creators<br />
               <span className="gradient-text">Meet Their Match</span>
             </h1>
 
-            <p className="max-w-2xl mx-auto text-xl leading-relaxed mb-12" style={{ color: '#94a3b8' }}>
+            <p className="max-w-2xl mx-auto text-xl leading-relaxed mb-12" style={{ color: 'var(--text-secondary)' }}>
               CollabHub uses advanced AI to connect content creators with elite editors, designers, and strategists — turning good content into unforgettable brands.
             </p>
 
@@ -711,10 +723,10 @@ function LandingPage({ onNavigate }) {
                 Start for Free <ArrowRight size={18} />
               </motion.button>
               <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate('business')}
-                className="px-10 py-4 text-base font-semibold glass border rounded-2xl transition-all"
-                style={{ borderColor: 'rgba(255,255,255,0.09)', color: '#94a3b8' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,58,237,0.38)'; e.currentTarget.style.color='#f1f5f9'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.09)'; e.currentTarget.style.color='#94a3b8'; }}>
+                className="px-10 py-4 text-base font-semibold rounded-2xl transition-all border"
+                style={{ borderColor: 'var(--glass-border)', color: 'var(--text-secondary)', background: 'var(--bg-card)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(99,102,241,0.35)'; e.currentTarget.style.color='#6366f1'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='var(--glass-border)'; e.currentTarget.style.color='var(--text-secondary)'; }}>
                 View Business Demo
               </motion.button>
             </div>
@@ -723,12 +735,12 @@ function LandingPage({ onNavigate }) {
       </section>
 
       {/* Stats */}
-      <section className="border-y py-12 px-6" style={{ borderColor: 'rgba(255,255,255,0.055)', background: 'rgba(255,255,255,0.02)' }}>
+      <section className="border-y py-12 px-6" style={{ borderColor: 'var(--border)', background: 'var(--bg-card)' }}>
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="text-center">
               <div className="font-display text-4xl font-extrabold mb-1 gradient-text">{s.value}</div>
-              <div className="text-sm font-medium" style={{ color: '#475569' }}>{s.label}</div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>{s.label}</div>
             </motion.div>
           ))}
         </div>
@@ -738,22 +750,22 @@ function LandingPage({ onNavigate }) {
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">Collaborate smarter</h2>
-            <p className="text-lg max-w-xl mx-auto" style={{ color: '#64748b' }}>Built for creators who take their craft seriously.</p>
+            <h2 className="font-display text-4xl md:text-5xl font-extrabold mb-4" style={{ color: 'var(--text-primary)' }}>Collaborate smarter</h2>
+            <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>Built for creators who take their craft seriously.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((f, i) => (
               <motion.div key={f.title}
                 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="glass rounded-3xl p-7 border card-lift group"
-                style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+                className="rounded-3xl p-7 border card-lift group"
+                style={{ borderColor: 'var(--border)', background: 'var(--bg-card)', boxShadow: 'var(--shadow-sm)' }}>
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110"
-                  style={{ background: `${f.color}1f` }}>
+                  style={{ background: `${f.color}18` }}>
                   <span style={{ color: f.color }}>{f.icon}</span>
                 </div>
-                <h3 className="font-bold text-lg text-white mb-2">{f.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</p>
+                <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-primary)' }}>{f.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -762,24 +774,24 @@ function LandingPage({ onNavigate }) {
 
       {/* CTA */}
       <section className="py-24 px-6 mx-6 my-12 rounded-3xl"
-        style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.22), rgba(79,70,229,0.14), rgba(14,165,233,0.09))', border: '1px solid rgba(124,58,237,0.18)' }}>
+        style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(79,70,229,0.08), rgba(14,165,233,0.06))', border: '1px solid rgba(99,102,241,0.18)' }}>
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-display text-4xl font-extrabold text-white mb-4">Ready to build your creative empire?</h2>
-          <p className="text-lg mb-8 leading-relaxed" style={{ color: '#94a3b8' }}>Join 50,000+ creators already leveling up with AI-matched collaborators.</p>
+          <h2 className="font-display text-4xl font-extrabold mb-4" style={{ color: 'var(--text-primary)' }}>Ready to build your creative empire?</h2>
+          <p className="text-lg mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>Join 50,000+ creators already leveling up with AI-matched collaborators.</p>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
             onClick={() => onNavigate('auth')}
-            className="px-10 py-4 bg-white font-extrabold rounded-2xl shadow-2xl transition"
-            style={{ color: '#7c3aed' }}>
+            className="px-10 py-4 font-extrabold rounded-2xl shadow-lg transition text-white"
+            style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', boxShadow: '0 8px 32px rgba(99,102,241,0.3)' }}>
             Join Free Today
           </motion.button>
         </div>
       </section>
 
-      <footer className="border-t py-10 px-6 text-center text-sm" style={{ borderColor: 'rgba(255,255,255,0.055)', color: '#334155' }}>
+      <footer className="border-t py-10 px-6 text-center text-sm" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
         © 2026 CollabHub, Inc. ·{' '}
-        <button className="hover:text-slate-300 transition-colors">Privacy</button> ·{' '}
-        <button className="hover:text-slate-300 transition-colors">Terms</button> ·{' '}
-        <button className="hover:text-slate-300 transition-colors">Support</button>
+        <button className="hover:text-indigo-600 transition-colors">Privacy</button> ·{' '}
+        <button className="hover:text-indigo-600 transition-colors">Terms</button> ·{' '}
+        <button className="hover:text-indigo-600 transition-colors">Support</button>
       </footer>
     </div>
   );
