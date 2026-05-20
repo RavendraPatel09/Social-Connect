@@ -1260,7 +1260,7 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
   };
 
   const stats = [
-    { label: 'Profile Views',    value: '1,284', delta: '+18%',      color: '#7c3aed', icon: <Eye size={18} />,      chart: [40,55,48,70,65,80,90,95,88,110,102,120] },
+    { label: 'Profile Views',    value: '1,284', delta: '+18%',      color: '#6366f1', icon: <Eye size={18} />,      chart: [40,55,48,70,65,80,90,95,88,110,102,120] },
     { label: 'Collaborations',   value: '12',    delta: '+3 this mo.',color: '#0ea5e9', icon: <Briefcase size={18} />,chart: [2,3,2,4,5,4,6,7,8,9,10,12] },
     { label: 'Avg. Rating',      value: '4.9',   delta: '★★★★★',     color: '#14b8a6', icon: <Star size={18} />,     chart: [4.5,4.6,4.7,4.7,4.8,4.8,4.9,4.9,4.9,4.9,4.9,4.9] },
     { label: 'AI Matches',       value: '34',    delta: 'new today',  color: '#f59e0b', icon: <Bot size={18} />,      chart: [5,8,12,10,18,22,16,28,24,30,32,34] },
@@ -1271,22 +1271,22 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl font-extrabold text-white">Good morning, Alex 👋</h1>
-          <p className="text-sm mt-1" style={{ color: '#475569' }}>
-            You have <span className="font-bold" style={{ color: '#a78bfa' }}>3 new collaboration requests</span> waiting.
+          <h1 className="font-display text-2xl md:text-3xl font-extrabold" style={{ color: 'var(--text-primary)' }}>Good morning, Alex 👋</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+            You have <span className="font-bold" style={{ color: '#6366f1' }}>3 new collaboration requests</span> waiting.
           </p>
         </div>
         <div className="hidden md:flex items-center gap-2">
           <motion.button whileHover={{ scale: 1.04 }} onClick={() => setShowBriefModal(true)}
             className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl border transition-all"
-            style={{ color: '#a78bfa', borderColor: 'rgba(124,58,237,0.38)' }}
-            onMouseEnter={e => e.currentTarget.style.background='rgba(124,58,237,0.09)'}
-            onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+            style={{ color: '#6366f1', borderColor: 'rgba(99,102,241,0.35)', background: 'var(--bg-card)' }}
+            onMouseEnter={e => e.currentTarget.style.background='rgba(99,102,241,0.06)'}
+            onMouseLeave={e => e.currentTarget.style.background='var(--bg-card)'}>
             <FileText size={15} /> AI Brief
           </motion.button>
           <motion.button whileHover={{ scale: 1.04 }} onClick={() => setView('explore')}
             className="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white rounded-xl glow-violet"
-            style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}>
+            style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
             <Plus size={15} /> New Search
           </motion.button>
         </div>
@@ -1299,13 +1299,13 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
         {stats.map((s, i) => (
           <motion.div key={s.label}
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
-            className="glass rounded-2xl border overflow-hidden card-lift shimmer p-4"
-            style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
-            <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ background: `${s.color}20` }}>
+            className="rounded-2xl border overflow-hidden card-lift p-4"
+            style={{ borderColor: 'var(--border)', background: 'var(--bg-card)', boxShadow: 'var(--shadow-sm)' }}>
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center mb-3" style={{ background: `${s.color}18` }}>
               <span style={{ color: s.color }}>{s.icon}</span>
             </div>
-            <div className="text-2xl font-extrabold text-white">{s.value}</div>
-            <div className="text-xs font-semibold mt-0.5" style={{ color: '#475569' }}>{s.label}</div>
+            <div className="text-2xl font-extrabold" style={{ color: 'var(--text-primary)' }}>{s.value}</div>
+            <div className="text-xs font-semibold mt-0.5" style={{ color: 'var(--text-secondary)' }}>{s.label}</div>
             <div className="text-xs font-bold mt-0.5" style={{ color: s.color }}>{s.delta}</div>
             <div className="mt-2 -mx-1"><SparklineChart data={s.chart} color={s.color} /></div>
           </motion.div>
@@ -1318,25 +1318,25 @@ function DashboardHome({ setView, onSaveToggle, savedProfiles }) {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <Flame size={14} style={{ color: '#f97316' }} />
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#64748b' }}>Trending Now</span>
+              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Trending Now</span>
             </div>
             <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
               {TRENDING_TOPICS.map((topic, i) => (
                 <motion.button key={topic.id}
                   initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
                   whileHover={{ scale: 1.04, y: -3 }}
-                  className="shrink-0 glass border rounded-2xl px-4 py-3 text-left card-lift transition-all"
-                  style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+                  className="shrink-0 rounded-2xl px-4 py-3 text-left card-lift border transition-all"
+                  style={{ background: 'var(--bg-card)', borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}>
                   <div className="text-xl mb-1">{topic.emoji}</div>
-                  <div className="font-bold text-sm text-white whitespace-nowrap">{topic.tag}</div>
-                  <div className="text-xs mt-0.5" style={{ color: '#475569' }}>{topic.posts} posts</div>
-                  <div className="text-xs font-bold mt-1" style={{ color: '#34d399' }}>{topic.growth}</div>
+                  <div className="font-bold text-sm whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>{topic.tag}</div>
+                  <div className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{topic.posts} posts</div>
+                  <div className="text-xs font-bold mt-1" style={{ color: '#10b981' }}>{topic.growth}</div>
                 </motion.button>
               ))}
             </div>
           </div>
 
-          <h2 className="font-bold text-white mb-4">Recent Collaborators</h2>
+          <h2 className="font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Recent Collaborators</h2>
           <div className="space-y-4">
             {PROFILES.slice(0, 4).map((profile, i) => {
               const isSaved = !!savedProfiles.find(p => p.id === profile.id);
